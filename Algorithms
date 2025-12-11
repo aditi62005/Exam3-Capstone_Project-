@@ -1,0 +1,84 @@
+Algorithm: Job Scheduling with a Min-Heap
+1. Data Structures
+
+Job
+
+Fields: id, description, priority, arrivalTime
+
+Lower priority number = more important
+
+If two jobs have the same priority, the one with smaller arrivalTime goes first
+
+MinHeapPriorityQueue
+
+Stores Job objects in an array-based min-heap
+
+The smallest (best) Job is always at index 0
+
+2. Add a Job (Insert)
+
+Input: new job J
+Output: heap with J inserted in correct place
+
+Steps:
+
+Put J at the end of the heap array.
+
+Set i to J’s index.
+
+While i is not the root and heap[i] is less than heap[parent(i)]:
+
+Swap heap[i] with heap[parent(i)].
+
+Set i = parent(i).
+
+Stop when the heap property is satisfied.
+
+(This is the insert + upheap logic.)
+
+3. Get and Remove Next Job (Poll)
+
+Input: none
+Output: the highest-priority job (or null if empty)
+
+Steps:
+
+If the heap is empty, return null.
+
+Save heap[0] as result (this is the best job).
+
+Move the last element of the heap to heap[0].
+
+Remove the last element from the array.
+
+Set i = 0.
+
+While i has at least one child:
+
+Let left = left child index, right = right child index.
+
+Find smallest among i, left, and right.
+
+If smallest is still i, stop (heap property restored).
+
+Otherwise, swap heap[i] with heap[smallest] and set i = smallest.
+
+Return result.
+
+(This is the poll / removeMin + downheap logic.)
+
+4. Scheduler Logic
+
+To add a job:
+
+Create a Job object (this automatically gets an arrivalTime).
+
+Call heap.insert(job).
+
+To process all jobs in order:
+
+While the heap is not empty:
+
+job = heap.poll()
+
+Process or print job.
